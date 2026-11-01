@@ -1,0 +1,53 @@
+{
+  "summary": "Regression testing for CrackerPOS code-quality fixes (useCallback/useMemo in contexts, get_order ObjectId fix, console.error in catch blocks, composite array keys). All 14 backend tests pass. All key frontend regressions confirmed working.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [
+      {
+        "component": "Receipt.js",
+        "issue": "Invalid order ID (/order/invalidid123) shows 'Loading receipt…' for >5 seconds before showing 'Receipt not found'. React Query retries 3 times by default before setting isError=true, causing perceived delay. Backend correctly returns 404 immediately. Pre-existing, not introduced by these fixes.",
+        "selector": "[data-testid='receipt-not-found']",
+        "priority": "LOW"
+      }
+    ],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_regression.py",
+    "/app/test_reports/pytest/pytest_results_iter7.xml"
+  ],
+  "action_items": [
+    "OPTIONAL: Add retry: 0 or retry: 1 to the receipt useQuery to reduce delay when showing 404 error state (cosmetic UX improvement only)"
+  ],
+  "critical_code_review_comments": [],
+  "updated_files": [
+    "/app/backend/tests/test_regression.py"
+  ],
+  "success_rate": {
+    "backend": "100% (14/14)",
+    "frontend": "95% (minor UX delay on invalid order ID, not a regression)"
+  },
+  "seed_data_creation": "Backend tests created then deleted TEST_RegSeller salesperson. TEST_POSSeller may exist in salespersons collection if cleanup failed.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "All code-quality fixes verified: AuthContext useMemo/useCallback working (user name shown in header, login button hidden for logged-in user), CartContext useCallback/useMemo working (cart persists, badge updates), get_order 404 fix confirmed (backend returns 404 for invalid/nonexistent IDs), Bulk import modal opens and shows preview+results screens correctly (composite keys working), POS salesperson dropdown works and shows on receipt, AdminDashboard deleteSalesperson and AdminWholesale doAction both have console.error and work correctly.",
+  "tests_run": [
+    "PASS: Admin login (admin@crackerpos.in / admin123) -> /admin dashboard loads",
+    "PASS: Admin dashboard shows 4 stat cards, orders section, products section, salespersons section",
+    "PASS: GET /api/orders/invalidid123 returns 404 (not 500) - ObjectId fix confirmed",
+    "PASS: GET /api/orders/000000000000000000000000 returns 404 - nonexistent order",
+    "PASS: Valid order fetch by ID returns full order data with items",
+    "PASS: AuthContext useMemo - user name 'Demo' shown in header for logged-in customer",
+    "PASS: CartContext useCallback - Add button works, cart badge shows count, cart page shows items",
+    "PASS: Receipt page loads for valid order ID - shows total, status PAID, salesperson name",
+    "PASS: POS salesperson dropdown found on /admin/pos with options",
+    "PASS: Bulk Import modal opens from dashboard, shows download template + CSV drop zone, closes correctly",
+    "PASS: Salesperson CRUD (add + delete) working - AdminDashboard console.error regression OK",
+    "PASS: Wholesale list endpoint working - AdminWholesale console.error regression OK",
+    "PASS: POS order with salesperson creates correctly and receipt shows salesperson_name"
+  ]
+}

@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: "DM Sans", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer base {
+  :root {
+    --background: 36 100% 95%;
+    --foreground: 16 40% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 16 40% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 16 40% 12%;
+    --primary: 9 74% 47%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 35 55% 88%;
+    --secondary-foreground: 19 18% 35%;
+    --muted: 35 55% 88%;
+    --muted-foreground: 19 18% 35%;
+    --accent: 42 91% 57%;
+    --accent-foreground: 16 40% 12%;
+    --destructive: 0 74% 42%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 35 54% 83%;
+    --input: 35 54% 83%;
+    --ring: 9 74% 47%;
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@media print {
+  @page {
+    size: 80mm 297mm;
+    margin: 4mm 3mm;
+  }
+
+  header,
+  nav {
+    display: none !important;
+  }
+
+  main {
+    padding-bottom: 0 !important;
+  }
+
+  body {
+    background: white !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}

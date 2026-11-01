@@ -1,0 +1,32 @@
+{
+  "summary": "Tested two bug fixes in AdminPOS.js: (1) New product scanner cache-stale bug - newly created product scanned in POS now correctly added to cart using retail_price/wholesale_price fallback from cart state. (2) Customer name/phone focus steal bug - scanner onBlur no longer steals focus from customer name/phone inputs. Full order-to-receipt flow verified.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [],
+  "success_rate": {"backend": "100%", "frontend": "100%"},
+  "test_credentials": "admin@crackerpos.in / admin123",
+  "seed_data_creation": "Created TEST Scanner Product (barcode: 890452598300, id: 6adc864c695f0fd141994a5d) for scanner test, then deleted after test",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Both AdminPOS.js bug fixes verified working: (1) addToCart stores retail_price/wholesale_price in cart state; lines() uses them as fallback when product not yet in React-Query cache. Scanner bar found correctly with data-testid='scanner-input'. (2) onBlur check prevents scanner refocus when goingToInput is true. Customer name input: placeholder='Customer name (Walk-in if blank)', phone: placeholder='Phone (optional)'. Place Order button data-testid='pos-place-order' (NOT pos-floating-place-order which is hidden). Receipt shows customer name, phone, order items correctly. Note: /api/auth/me returns 404 (endpoint missing) so page reloads log out user - always login fresh and navigate via SPA links.",
+  "test_results": {
+    "scanner_mode_visible": "PASS - scanner bar shows with SCANNER ON badge",
+    "new_product_scan_added_to_cart": "PASS - TEST Scanner Product (barcode 890452598300) added to order panel at ₹100.00",
+    "customer_name_focus_not_stolen": "PASS - typed 'Ramesh Kumar', value preserved, active element stayed on customer name input",
+    "phone_focus_not_stolen": "PASS - typed '9876543210', value preserved",
+    "order_placed_successfully": "PASS - navigated to /order/6adc86fe695f0fd141994a5e",
+    "receipt_shows_customer_name": "PASS - 'Ramesh Kumar (Retail)' visible on receipt",
+    "receipt_shows_phone": "PASS - '9876543210' visible on receipt",
+    "receipt_shows_product": "PASS - 'TEST Scanner Product (Packet of 5)' at ₹100.00"
+  }
+}

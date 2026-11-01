@@ -1,0 +1,36 @@
+{
+  "summary": "Tested date filter feature on Salesperson Report page. All filter chips (All time, Today, This week, This month, Custom) present and functional. Custom range inputs appear when Custom is selected. Summary cards and table re-fetch correctly for all filter presets. Range labels update correctly.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": ["/app/test_reports/iteration_9.json"],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [],
+  "success_rate": {
+    "backend": "100%",
+    "frontend": "100%"
+  },
+  "seed_data_creation": "",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Date filter on /admin/reports fully working. Filter chips: filter-all, filter-today, filter-week, filter-month, filter-custom all present. Custom inputs (custom-from, custom-to) appear on Custom click. Oct 2026 range shows Test Seller orders=2 revenue=₹756. 2020 range shows all zeros. Range labels update correctly: 'all time', 'today', 'this month', '2026-10-01 – 2026-10-31'.",
+  "tests_run": [
+    "PASS: All 5 filter chips present (filter-all, filter-today, filter-week, filter-month, filter-custom)",
+    "PASS: All time - Test Seller orders=2, revenue>0",
+    "PASS: Today filter - range label shows 'today'",
+    "PASS: Custom filter - custom-from and custom-to inputs visible",
+    "PASS: Custom 2026-10-01 to 2026-10-31 - Test Seller orders=2, revenue=₹756.00",
+    "PASS: Custom 2026-10-01 to 2026-10-31 - Summary cards show revenue=₹756.00, orders=2",
+    "PASS: Custom 2026-10-01 to 2026-10-31 - Range label shows date range",
+    "PASS: Custom 2020-01-01 to 2020-12-31 - Test Seller orders=0, revenue=—",
+    "PASS: Custom 2020 - Total orders=0",
+    "PASS: This month - range label shows 'this month'"
+  ]
+}

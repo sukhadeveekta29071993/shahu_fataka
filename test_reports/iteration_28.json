@@ -1,0 +1,32 @@
+{
+  "summary": "Tested the Label Size Setting feature end to end. Backend: 23/23 pytest pass. GET returns the defaults. Valid PATCH values persist, including the 20/150 boundaries and decimals. Out-of-range values, strings, bools, null and '50' all return 400 with the 'must be a number between 20 and 150 mm' message. An invalid PATCH leaves the saved values unchanged, and openapi.json returns 200. Frontend: the Shop Settings 'Barcode Label Size' block renders. Exactly one chip is active at a time for every preset and for Custom. Custom shows the width/height inputs. The preview box resizes at 1.6px/mm (80x40 for 50x25, 160x80 for 100x50, 112x64 for 70x40, clamped to 20 for an input of 15) and the preview text shows 'W × H mm'. Saving 62x35 and reloading leaves 62x35 active. Saving custom 45.5x28 and reloading leaves Custom active with the same values. Saving width 15 shows the backend error 'Label width must be a number between 20 and 150 mm' in the UI. printLabels was checked with window.open stubbed and the blob HTML fetched. Both bulk print (9 labels) and per-row print (1 label) contain '@page { size: Wmm Hmm' matching the saved size. This held for 62x35, 100x50 (picked up right after save, no reload) and 45.5x28. The setting was reset to 50x25 at the end via the UI and then via PATCH; GET confirms 50/25.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {"endpoint": "PATCH /api/admin/settings", "issue": "Saved values are stored as floats via round(float(v),1), so GET returns 50.0/25.0 after a save but int 50/25 by default. Harmless for JS, but the type is inconsistent."},
+      {"endpoint": "PATCH /api/admin/settings", "issue": "The error says 'Label width must be...' or 'Label height must be...' depending on the field, not the literal 'Label width/height must be...' from the spec. This seems fine; tests match the shared suffix."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Shop Settings error banner", "issues": ["The settings error message element has no data-testid (e.g. settings-error), which makes it harder to target in tests"]}
+    ]
+  },
+  "test_report_links": ["/app/backend/tests/test_label_size.py", "/app/test_reports/pytest/pytest_label_size.xml"],
+  "action_items": [
+    "Optional: add data-testid='settings-error' to the SettingsSection error div",
+    "Optional: store label sizes so the type matches the defaults (e.g. keep int when it is a whole number)"
+  ],
+  "critical_code_review_comments": [
+    "SettingsSection hydrates state with a render-time 'if (saved && notifyEmail === \"\" && upiId === \"\")' hack (pre-existing). If the admin clears both the notify email and the UPI ID, the next render overwrites the user's edits with saved values. Use useEffect on saved instead.",
+    "AdminDashboard.js is about 1900 lines. Consider splitting LabelSizeSetting, SettingsSection and printLabels into separate modules."
+  ],
+  "updated_files": ["/app/backend/tests/test_label_size.py"],
+  "success_rate": {"backend": "100%", "frontend": "100%"},
+  "seed_data_creation": "None. The label size was reset to 50x25 at the end.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Admin login goes through /login with tmshivas@gmail.com and redirects to /admin. For print tests, stub window.open with a {focus,print} object, then fetch the captured blob URL. The label setting is currently 50x25."
+}

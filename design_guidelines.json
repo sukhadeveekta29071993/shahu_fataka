@@ -1,0 +1,109 @@
+{
+  "project_title": "CrackerPOS E-Commerce Customer App",
+  "app_type": "customer e-commerce (fireworks shop)",
+  "design_archetype": "Tool-Like Festive POS & E-Commerce",
+  "theme_palette": {
+    "background": "#FFF6E8",
+    "header_sidebar": "#7A1410",
+    "accent_red": "#D13A1F",
+    "accent_gold": "#F5B82E",
+    "text_main": "#2B1712",
+    "text_muted": "#6B5148",
+    "border_color": "#EBD8BF",
+    "chip_bg": "#F3E2CC",
+    "card_bg": "#FFFFFF"
+  },
+  "border_radii": {
+    "card": "16px (rounded-2xl)",
+    "pill": "22px (rounded-full)",
+    "input": "12px (rounded-xl)"
+  },
+  "typography": {
+    "heading_font": "Bricolage Grotesque, sans-serif",
+    "body_font": "DM Sans, sans-serif",
+    "google_fonts_link": "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap",
+    "hierarchy": {
+      "hero_title": "text-3xl md:text-4xl font-extrabold tracking-tight font-display",
+      "section_heading": "text-xl md:text-2xl font-bold font-display",
+      "card_title": "text-base font-bold font-display",
+      "price_highlight": "text-lg font-extrabold text-[#D13A1F] font-display",
+      "body": "text-sm font-normal text-[#2B1712] font-body",
+      "muted": "text-xs font-medium text-[#6B5148] font-body"
+    }
+  },
+  "image_urls": {
+    "sparkler_hero": "https://images.unsplash.com/photo-1572979440672-16af53b49b52?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzd8MHwxfHNlYXJjaHwzfHxmaXJld29ya3MlMjBzcGFya2xlcnMlMjBjcmFja2VycyUyMGZlc3RpdmFsJTIwY2VsZWJyYXRpb258ZW58MHx8fHwxNzkyMjg5ODMxfDA&ixlib=rb-4.1.0&q=85",
+    "firework_burst": "https://images.pexels.com/photos/5499990/pexels-photo-5499990.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "flowerpot_fountain": "https://images.pexels.com/photos/18168964/pexels-photo-18168964.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "sparkler_hand": "https://images.unsplash.com/photo-1700601589928-8937ebf649fa?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzd8MHwxfHNlYXJjaHwyfHxmaXJld29ya3MlMjBzcGFya2xlcnMlMjBjcmFja2VycyUyMGZlc3RpdmFsJTIwY2VsZWJyYXRpb258ZW58MHx8fHwxNzkyMjg5ODMxfDA&ixlib=rb-4.1.0&q=85"
+  },
+  "layout_and_structure": {
+    "mobile_first": true,
+    "max_width": "max-w-md mx-auto min-h-screen bg-[#FFF6E8] relative flex flex-col pb-24 md:max-w-4xl",
+    "header": {
+      "bg": "#7A1410",
+      "text": "#FFF6E8",
+      "logo_mark": "gold circle (#F5B82E) with 8-ray maroon (#7A1410) firework burst icon",
+      "sticky": true
+    },
+    "category_chips": {
+      "categories": ["All", "Anar", "Fulzadi", "Bomb & Sutli", "Fancy Phatake", "Ladi", "Rockets"],
+      "active_state": "bg-[#7A1410] text-[#FFF6E8] rounded-full px-4 py-1.5 text-xs font-bold",
+      "inactive_state": "bg-[#F3E2CC] text-[#2B1712] rounded-full px-4 py-1.5 text-xs font-medium hover:bg-[#EBD8BF]"
+    },
+    "product_card": {
+      "bg": "bg-white",
+      "border": "border border-[#EBD8BF]",
+      "rounded": "rounded-2xl",
+      "shadow": "shadow-sm hover:shadow-md transition-shadow",
+      "badge": "stock remaining badge e.g. '4 left' in #D13A1F bg red tint or text",
+      "stepper": "quantity add/subtract button with count in gold/maroon buttons"
+    },
+    "sticky_cart_bar": {
+      "bg": "#7A1410",
+      "text": "#FFF6E8",
+      "accent_gold": "#F5B82E",
+      "position": "fixed bottom-0 left-0 right-0 max-w-md mx-auto z-40 p-3 bg-[#7A1410] text-[#FFF6E8] flex justify-between items-center rounded-t-2xl shadow-xl"
+    }
+  },
+  "key_features_and_flows": {
+    "catalog": "Product listing with live instant search, category filter chips, stock badges, retail vs wholesale tier prices, instant quantity increment/decrement.",
+    "cart_drawer_page": "Itemized list with quantity controls, Subtotal, CGST 9%, SGST 9%, Round off calculation, and Grand Total display.",
+    "checkout_page": "Payment method tabs (Cash, UPI, Card), Mock UPI QR Code generator/image with UTR transaction input, and 'Payment Received' instant order submit button.",
+    "order_receipt": "Thermal 80mm printable style invoice dialog/view with HSN codes, GST summary breakdown, delivery status, and safety warning notes.",
+    "auth_pages": "Login & Signup with Retail vs Wholesale toggle, wholesale approval pending notice, GSTIN (optional), and business profile saved state."
+  },
+  "testing_guidelines": {
+    "data_testid_convention": "All key buttons, inputs, category chips, cart items, price totals, and nav items MUST include data-testid in kebab-case format.",
+    "required_testids": [
+      "data-testid='header-logo'",
+      "data-testid='search-input'",
+      "data-testid='category-chip-{category}'",
+      "data-testid='product-card-{id}'",
+      "data-testid='add-to-cart-btn-{id}'",
+      "data-testid='qty-increment-{id}'",
+      "data-testid='qty-decrement-{id}'",
+      "data-testid='sticky-cart-bar'",
+      "data-testid='view-cart-button'",
+      "data-testid='cart-subtotal'",
+      "data-testid='cart-cgst'",
+      "data-testid='cart-sgst'",
+      "data-testid='cart-grand-total'",
+      "data-testid='checkout-button'",
+      "data-testid='payment-tab-upi'",
+      "data-testid='upi-utr-input'",
+      "data-testid='confirm-payment-button'",
+      "data-testid='order-receipt-modal'",
+      "data-testid='login-email-input'",
+      "data-testid='signup-wholesale-toggle'"
+    ]
+  },
+  "instructions_to_main_agent": [
+    "Load Google Fonts link for DM Sans and Bricolage Grotesque in index.html or App.js.",
+    "Maintain the exact palette: background #FFF6E8, header/sidebar #7A1410, accent red #D13A1F, gold #F5B82E, text #2B1712, muted text #6B5148, borders #EBD8BF, chips #F3E2CC.",
+    "Use standard JS/JSX format for component files inside frontend/src/.",
+    "Ensure retail vs wholesale prices update dynamically based on user role status.",
+    "Include mock payment flow with UPI QR code rendering, UTR input, and instant receipt generation.",
+    "Apply data-testid to all interactive components as outlined in the testing guidelines."
+  ]
+}

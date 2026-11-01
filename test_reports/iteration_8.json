@@ -1,0 +1,37 @@
+{
+  "summary": "Tested two new features: (1) Salesperson Report page at /admin/reports and (2) Real shop details on receipt. All feature tests pass. Backend endpoint and frontend rendering verified.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": ["/app/test_reports/iteration_8.json"],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [],
+  "success_rate": {
+    "backend": "100%",
+    "frontend": "100%"
+  },
+  "seed_data_creation": "Added 'Ravi Kumar' salesperson via POST /api/admin/salespersons to test the 0-orders row display. This salesperson now exists in the DB.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Both new features verified working: (1) Admin nav bar has 'Reports' tab (data-testid=admin-tab-reports) navigating to /admin/reports; page shows 3 summary cards (revenue=₹756, orders=2, top seller=Test Seller) and performance breakdown table with Test Seller (orders=2, revenue=₹756) and Ravi Kumar (orders=0, revenue=—). (2) Receipt page shows correct shop details: Balaji Fataka, GSTIN: 27BGPPA1777A1ZL, Explosives Lic: 108975582503, Ph: 9637662411. Backend GET /api/admin/reports/salesperson returns correct merged data including 0-order salespersons.",
+  "tests_run": [
+    "PASS: GET /api/admin/reports/salesperson returns Test Seller (orders=2, revenue=756) and Ravi Kumar (orders=0) after adding Ravi Kumar",
+    "PASS: Admin nav has Reports tab (data-testid=admin-tab-reports)",
+    "PASS: /admin/reports loads with data-testid=admin-reports",
+    "PASS: Summary cards: report-total-revenue (₹756.00), report-total-orders (2), report-top-seller (Test Seller)",
+    "PASS: Performance breakdown table (sp-report-table) shows both salespersons",
+    "PASS: Test Seller row shows orders=2, revenue=₹756.00, last sale=18 Oct 2026",
+    "PASS: Ravi Kumar row shows orders=0, revenue=—",
+    "PASS: Receipt page shows 'Balaji Fataka' as shop name",
+    "PASS: Receipt page shows GSTIN: 27BGPPA1777A1ZL",
+    "PASS: Receipt page shows Explosives Lic: 108975582503",
+    "PASS: Receipt page shows Ph: 9637662411"
+  ]
+}

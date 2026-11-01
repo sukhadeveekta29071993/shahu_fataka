@@ -1,0 +1,32 @@
+{
+  "summary": "GST Toggle feature tested end-to-end. All 6 test scenarios passed successfully.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Dead code found in server.py lines 456-457: unreachable code after return statement in update_settings() - lines 'user = await get_current_user(request)' and 'return user_out(user)' are never executed. Minor cleanup needed."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "100%", "frontend": "100%"},
+  "test_credentials": "admin@crackerpos.in / admin123",
+  "seed_data_creation": "Created 3 test POS orders during testing (invoice FW/2026-27/0056, 0058, 0059)",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "GST toggle feature fully working. Settings at bottom of /admin page. Toggle data-testid='settings-gst-toggle'. POS shows CGST/SGST rows with data-testid='pos-cgst-line'/'pos-sgst-line'. Receipt shows rows with data-testid='receipt-cgst'/'receipt-sgst'. Math verified: 2700 * 9% = 243 each, total 3186.",
+  "test_results": {
+    "1_gst_toggle_visible": "PASS - data-testid='settings-gst-toggle' visible in Shop Settings section",
+    "2_toggle_on_save": "PASS - GST enabled, saved via API and UI without errors",
+    "3_pos_cgst_sgst_rows": "PASS - CGST (9%) ₹243.00 and SGST (9%) ₹243.00 shown in POS order panel. Total = 2700 + 486 = 3186",
+    "4_receipt_with_gst": "PASS - Receipt shows CGST(9%) 243.00, SGST(9%) 243.00, TOTAL ₹3186.00",
+    "5_gst_off_no_rows": "PASS - After toggling OFF and saving, POS shows no CGST/SGST rows, Total = Subtotal = ₹2700",
+    "6_receipt_no_gst": "PASS - Receipt with GST OFF shows only Subtotal and TOTAL ₹2700, no CGST/SGST rows"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "summary": "Tested POS discount feature (% and flat ₹) end-to-end. All backend tests pass. UI discount feature works correctly - toggles, input, totals panel updates in real-time. Order placement and receipt navigation work. Found 1 bug: Receipt's GST Summary table shows pre-discount taxable/cgst/sgst values instead of post-discount values.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [
+      {
+        "component": "Receipt.js - GST Summary table",
+        "issue": "GST Summary table computes taxable/cgst/sgst from raw item price*qty (lines 35-41 in Receipt.js) WITHOUT applying discount. Shows wrong pre-discount values. E.g. 10% discount on ₹150 product: summary shows Taxable=150, CGST=13.50 instead of correct Taxable=135, CGST=12.15. The main totals section above (using order.taxable_value) shows correct values.",
+        "selector": "GST Summary table in Receipt page",
+        "priority": "MEDIUM",
+        "fix": "In Receipt.js lines 35-41, the gstRows computation must scale down item values proportionally by (1 - discount/subtotal), or use order-level taxable_value distributed per HSN."
+      }
+    ],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_discount_feature.py",
+    "/app/test_reports/pytest/discount_results.xml"
+  ],
+  "action_items": [
+    "Fix Receipt.js GST Summary table to apply discount proportion when computing per-HSN taxable/cgst/sgst values"
+  ],
+  "critical_code_review_comments": [
+    "Receipt.js lines 35-41: gstRows sums price*qty per HSN without considering discount. Should multiply by (taxable_value/subtotal) ratio or distribute discount proportionally.",
+    "All other discount logic is correctly implemented: frontend totals, backend computation, receipt main totals"
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_discount_feature.py"
+  ],
+  "success_rate": {
+    "backend": "100% (6/6)",
+    "frontend": "95% (all flows work, minor receipt GST summary display bug)"
+  },
+  "seed_data_creation": "Test orders placed during testing",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Discount feature fully working. All 3 discount types (none/percent/flat) work in UI with correct real-time totals. Backend correctly computes discount, taxable, cgst, sgst and stores in order. Receipt main totals section is correct. Only bug: Receipt GST Summary table (bottom section per HSN) shows pre-discount values. This is a frontend-only bug in Receipt.js lines 35-41.",
+  "rca_of_issue": {
+    "gst_summary_pre_discount": "Receipt.js builds gstRows by summing item.price * item.qty per HSN code. This is the gross subtotal before discount. The discount is an order-level field not applied at item level, so the GST summary table bypasses it. Fix: multiply each HSN's taxable by (order.taxable_value / order.subtotal) ratio to get the discount-adjusted taxable per HSN."
+  }
+}

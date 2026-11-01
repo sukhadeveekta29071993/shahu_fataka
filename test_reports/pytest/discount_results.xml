@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="6" time="1.305" timestamp="2026-10-18T14:17:37.516928+00:00" hostname="agent-env-dbf1b407-97d2-4ebc-93ad-8f7ccac1d7b3"><testcase classname="tests.test_discount_feature.TestDiscountPercent" name="test_percent_discount_status" time="0.560" /><testcase classname="tests.test_discount_feature.TestDiscountPercent" name="test_percent_discount_values" time="0.143"><failure message="KeyError: 'grand_total'">backend/tests/test_discount_feature.py:56: in test_percent_discount_values
+    print(f"PASS: price={price}, discount={d['discount']}, taxable={d['taxable_value']}, cgst={d['cgst']}, total={d['grand_total']}")
+                                                                                                                  ^^^^^^^^^^^^^^^^
+E   KeyError: 'grand_total'</failure></testcase><testcase classname="tests.test_discount_feature.TestDiscountFlat" name="test_flat_discount_status" time="0.071" /><testcase classname="tests.test_discount_feature.TestDiscountFlat" name="test_flat_discount_values" time="0.145"><failure message="KeyError: 'grand_total'">backend/tests/test_discount_feature.py:74: in test_flat_discount_values
+    print(f"PASS: price={price}, flat_discount={d['discount']}, taxable={d['taxable_value']}, total={d['grand_total']}")
+                                                                                                     ^^^^^^^^^^^^^^^^
+E   KeyError: 'grand_total'</failure></testcase><testcase classname="tests.test_discount_feature.TestDiscountNone" name="test_no_discount" time="0.142"><failure message="KeyError: 'grand_total'">backend/tests/test_discount_feature.py:84: in test_no_discount
+    print(f"PASS: no discount, total={d['grand_total']}")
+                                      ^^^^^^^^^^^^^^^^
+E   KeyError: 'grand_total'</failure></testcase><testcase classname="tests.test_discount_feature.TestDiscountReceipt" name="test_discount_in_receipt" time="0.158" /></testsuite></testsuites>

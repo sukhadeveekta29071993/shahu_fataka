@@ -1,0 +1,20 @@
+{
+  "summary": "Deployment health smoke test for CrackerPOS. All 14 backend tests passed: /api/openapi.json (200 JSON) and /api/docs (Swagger) work; /api/products returns the list with no _id; login and /auth/me return the right role for admin1, admin2, retail, wholesale (pending) and salesperson; a retail cash order lowers stock by 1 and can be fetched with GET; /api/admin/stats returns 200 for admin, 403 for retail and salesperson, and 401 for anonymous users. Frontend home page loads 8 product cards and category chips with no broken images.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {"ui_bugs": [], "integration_issues": [], "design_issues": []},
+  "test_report_links": ["/app/backend/tests/test_deploy_smoke.py", "/app/test_reports/pytest/pytest_deploy_smoke.xml"],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "seed() is env-only for admin passwords now, as expected. Admins are seeded only when no admin exists, and entries with a missing env var are skipped quietly. Consider logging a warning when ADMIN_EMAIL/ADMIN_PASSWORD are missing.",
+    "The demo retail and wholesale users are still seeded with hardcoded password 'demo1234'. Consider whether this is acceptable in production.",
+    "server.py is over 2200 lines. Consider splitting it into routers.",
+    "The anonymous home page logs two expected 401 console errors from the auth/me and refresh probes. These are harmless.",
+    "Supervisor shows the 'mobile' program FATAL. It is not part of this app and is probably unrelated."
+  ],
+  "updated_files": ["/app/backend/tests/test_deploy_smoke.py"],
+  "success_rate": {"backend": "100%", "frontend": "100%"},
+  "seed_data_creation": "One retail cash order of qty 1 was created by demo@crackerpos.in, which lowered one product's stock by 1. No passwords were changed and no data was deleted.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Smoke suite: tests/test_deploy_smoke.py. Credentials are in /app/memory/test_credentials.md. Auth uses an access_token cookie or a Bearer token. Login is rate-limited to 5 failures per IP."
+}

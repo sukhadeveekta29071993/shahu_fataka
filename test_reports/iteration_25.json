@@ -1,0 +1,42 @@
+{
+  "summary": "Tested all 3 reported bugs: (1) GST stale cache in AdminPOS, (2) CGST/SGST missing on invoice, (3) hardcoded UPI on receipt. All 3 bugs verified as FIXED.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {
+        "endpoint": "/api/auth/me",
+        "issue": "Endpoint does not exist (404). AuthContext calls /auth/me on page reload but it returns 404, causing all protected routes to break on page.goto() in Playwright. This is a pre-existing issue. Auth works via httpOnly cookie + /auth/refresh interceptor but only when navigating client-side (React Router). Any hard refresh of protected routes fails.",
+        "priority": "HIGH"
+      }
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_results": {
+    "bug_1_gst_cache": "FIXED - AdminPOS settings query has staleTime:0 and refetchOnMount:true. POS correctly shows CGST 9% (₹243) and SGST 9% (₹243) when item added after enabling GST.",
+    "bug_2_cgst_sgst_on_invoice": "FIXED - Receipt shows CGST (9%) 243.00 and SGST (9%) 243.00 rows between Subtotal and TOTAL. Total=₹3186 = 2700*1.18.",
+    "bug_3_upi_qr_hardcoded": "FIXED - /api/settings/public returns current DB value. Receipt uses dynamic upiId from shopInfo query. Changing UPI to test123@upi and saving shows test123@upi in receipt QR section.",
+    "settings_public_endpoint": "PASS - GET /api/settings/public returns {upi_id: '9309782750@ybl', upi_name: 'Shahu Phataka'} without auth.",
+    "gst_disabled_no_rows": "Not explicitly tested in UI but computeTotals correctly returns cgst=0 when gstEnabled=false, and pos-cgst-line only renders when gstEnabled && totals.cgst > 0.",
+    "settings_restored": "UPI restored to 9309782750@ybl, GST disabled (false)"
+  },
+  "test_report_links": [],
+  "action_items": [
+    "Consider adding GET /api/auth/me endpoint to support page refreshes on protected routes (pre-existing bug, not related to current PR)"
+  ],
+  "critical_code_review_comments": [
+    "Missing /api/auth/me endpoint - AuthContext.js calls api.get('/auth/me') on mount but backend has no such route. This means all protected routes fail on hard page reload. Auth only works via initial login + React Router client-side navigation. User-facing impact: if a customer refreshes /order/:id they get redirected to /login."
+  ],
+  "updated_files": [],
+  "success_rate": {
+    "backend": "100%",
+    "frontend": "100%"
+  },
+  "seed_data_creation": "Test POS order FW/2026-27/0062 created for GST testing (Test GST Customer, ₹3186)",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "All 3 bugs fixed and verified. Settings restored (UPI=9309782750@ybl, GST=OFF). Pre-existing issue: /auth/me endpoint missing means hard page reload on protected routes breaks auth. Use client-side navigation (clicking links) not page.goto() when testing protected routes in Playwright."
+}
