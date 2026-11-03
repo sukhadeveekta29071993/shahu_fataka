@@ -2274,10 +2274,31 @@ async def shutdown_db_client():
     client.close()
 
 
-origins_env = os.environ.get('CORS_ORIGINS', '*').strip()
-if origins_env == '*':
-    app.add_middleware(CORSMiddleware, allow_credentials=True, allow_origin_regex=".*", allow_methods=["*"], allow_headers=["*"])
-else:
-    app.add_middleware(CORSMiddleware, allow_credentials=True, allow_origins=[o.strip() for o in origins_env.split(',')], allow_methods=["*"], allow_headers=["*"])
+# ---------- CORS Configuration ----------
+
+allowed_origins = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "https://shahu-fataka-qdh3vfnge-rebusi.vercel.app",
+]
+
+origins_env = os.environ.get("CORS_ORIGINS", "").strip()
+
+if origins_env:
+    allowed_origins = [
+        origin.strip().rstrip("/")
+        for origin in origins_env.split(",")
+        if origin.strip()
+    ]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=allowed_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(api_router)
